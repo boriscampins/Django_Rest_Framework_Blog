@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 def blog_thumbnail_directory(instance, filename):
@@ -16,8 +17,8 @@ class Category(models.Model):
     parent = models.ForeignKey("self",related_name="children", on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField()
-    thumbnail = models.ImageField(upload_to=blog_thumbnail_directory)
+    description = models.TextField(blank=True, null=True)
+    thumbnail = models.ImageField(upload_to=blog_thumbnail_directory, blank=True, null=True)
     slug = models.CharField(max_length=128)
 
     def __str__(self):  
@@ -40,7 +41,7 @@ class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
-    content = models.TextField()
+    content = CKEditor5Field('Content', config_name='default')
     thumbnail = models.ImageField(upload_to=blog_thumbnail_directory)
 
     keywords = models.CharField(max_length=128)

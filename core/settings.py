@@ -45,10 +45,43 @@ PROJECT_APP = [
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'channels'
+    'channels',
+    'django_ckeditor_5',
 
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APP + THIRD_PARTY_APPS
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': {
+            'items': ['heading', '|', 'bold', 'italic', 'link',
+                      'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+                    }
+
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': {
+            'items': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                      'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                    'insertTable',
+                    ],
+            'shouldNotGroupWhenFull': True
+        },
+        
+       
+
+    },
+ 
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
