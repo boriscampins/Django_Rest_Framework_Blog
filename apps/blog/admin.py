@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 
-from .models import Category, Post, Heading
+from .models import Category, Post, Heading, PostAnalytics
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -52,3 +52,16 @@ class HeadingAdmin(admin.ModelAdmin):
     search_fields = ('title', 'post__title')
     list_filter = ('level', 'post')
     ordering = ('post','order')
+
+@admin.register(PostAnalytics)    
+class PostAnalyticsAdmin(admin.ModelAdmin):
+    list_display = ('pos_title','views', 'impressions', 'clicks', 'clicks_through_rate', 'avg_time_on_page')
+    search_fields = ('post__title',)
+    readonly_fields = ('post','views', 'impressions', 'clicks', 'clicks_through_rate', 'avg_time_on_page')
+    ordering = ('-post__created_at',)
+
+    def pos_title(self, obj):
+        obj.post.title = Post.title
+        return obj.post.title
+
+    #post_title.short_description = 'Post Title'    
