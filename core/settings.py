@@ -174,7 +174,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     "DEAFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAutheticateOrReadOnly"
+        "rest_framework.permissions.AllowAny"
     ],
     
 }

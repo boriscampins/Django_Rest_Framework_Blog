@@ -61,7 +61,7 @@ class PostAnalyticsAdmin(admin.ModelAdmin):
     ordering = ('-post__created_at',)
 
     def pos_title(self, obj):
-        obj.post.title = Post.title
+        obj.post.title = obj.post.title
         return obj.post.title
 
     #post_title.short_description = 'Post Title'    
