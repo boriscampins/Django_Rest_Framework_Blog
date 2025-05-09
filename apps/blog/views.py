@@ -4,11 +4,15 @@ from rest_framework import permissions
 
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound, APIException
+import redis
+from django.conf import settings
 
 from .models import Post, PostView, PostAnalytics
 from .serializers import PostListSerializer, PostSerializer, HeadingSerializer
 from .utils import get_client_ip
 
+
+redis_client = redis.StrictRedis(host=settings.REDIS_HOST, port=6379, db=0)
 
 #class PostListView(ListAPIView):
     #queryset = Post.postobjects.all()
@@ -18,10 +22,16 @@ class PostListView(APIView):
     def get(self, request,*args, **kwargs):
         try:
             posts = Post.postobjects.all()
+            
             if not posts.exists():
                 raise NotFound(detail="No post found.")
-            
+ 
+            for post in posts:
+                #increment_post_impressions.delay(post.id)
+                redis_client.incr(f"post:impressions:{post.id}")  
+                         
             serialized_posts = PostListSerializer(posts, many=True).data
+            
         except Post.DoesNotExist:
             raise NotFound(detail="No post found")
         except Exceptions as e:
