@@ -55,9 +55,9 @@ class HeadingAdmin(admin.ModelAdmin):
 
 @admin.register(PostAnalytics)    
 class PostAnalyticsAdmin(admin.ModelAdmin):
-    list_display = ('pos_title','views', 'impressions', 'clicks', 'clicks_through_rate', 'avg_time_on_page')
+    list_display = ('pos_title','views', 'impressions', 'clicks', 'click_through_rate', 'avg_time_on_page')
     search_fields = ('post__title',)
-    readonly_fields = ('post','views', 'impressions', 'clicks', 'clicks_through_rate', 'avg_time_on_page')
+    readonly_fields = ('post','views', 'impressions', 'clicks', 'click_through_rate', 'avg_time_on_page')
     ordering = ('-post__created_at',)
 
     def pos_title(self, obj):

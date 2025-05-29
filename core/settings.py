@@ -24,6 +24,10 @@ environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
+
+VALID_API_KEYS = env.str("VALID_API_KEYS").split(",")
+
+#print(VALID_API_KEYS)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -45,6 +49,7 @@ PROJECT_APP = [
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework_api',
     'channels',
     'django_ckeditor_5',
     'django_celery_results',
@@ -173,8 +178,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 REST_FRAMEWORK = {
-    "DEAFAULT_PERMISSION_CLASSES": [
+    "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny"
     ],
     
@@ -192,7 +198,7 @@ REDIS_HOST = env("REDIS_HOST")
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": ("REDIS_URL"),
+        "LOCATION": env("REDIS_URL"),
         "OPTIONS": {
             "CLIENT_CLASS":"django_redis.client.DefaultClient"
           
@@ -219,6 +225,7 @@ CELERY_CACHE_BACKEND = 'default'
 
 CELERY_IMPORTS = (
     'core.tasks',
+    'apps.blog.tasks'
     
 )
 
