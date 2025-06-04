@@ -134,7 +134,7 @@ class PostAnalytics(models.Model):
     def increment_view(self, ip_address):
     #    ip_address = get_client_ip(request)
 
-        if not PostView.objects.filter(post=self.post, ip_address=ip_address).exits():
+        if not PostView.objects.filter(post=self.post, ip_address=ip_address).exists():
             PostView.objects.create(post=self.post, ip_address=ip_address)
             
             
